@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kronometre</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<style>
+    body{
+        background-color: brown;
+    }
+    .container {
+        text-align: center;
+       background-color: rgb(255, 212, 212);
+       width: 290px;
+       height: 115px;
+       margin: auto;
+       margin-right: 40%;
+       margin-top: 15%;
+       border-radius: 25px;
+       box-shadow: 0 8px 16px 0 rgb(30, 30, 30), 0 6px 20px 0 rgb(30, 30, 30);
+      }
+      
+      #clock {
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        font-size: 36px;
+        margin: auto;
+        background-color: rgb(116, 36, 36);
+        color: azure;
+        height: 60px;
+        width: 270px;
+        border-radius: 21px;
+        position: relative;
+        top: 10px;
+      }
+      span{
+        position: relative;
+        top: 5px;
+      }
+      
+      h1{
+        color: rgb(255, 212, 212);
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+       position: absolute;
+       text-align: center;
+       top: 160px;
+       left: 685px;
+      }
+
+      #nokta{
+        position: relative;
+        top: 3px;
+      }
+      
+      button {
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        position: relative;
+        top: 19px;
+        font-size: 14px;
+        border-radius: 20px;
+        width: 131px;
+        height: 28px;
+        border: none;
+        background-color: rgb(116, 36, 36);
+        color: azure;
+      }
+      .buttons{
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        width: 270px;
+        margin: auto;
+      }
+      
+      
+</style>
+<body>
+    <div>
+       <h1>
+           <b> 1tane_bonti </b> 
+        </h1>
+        
+
+    </div>
+<div class="container">
+   
+  <div id="clock">
+    <span id="hours">00</span> <span id="nokta"> : </span>
+    <span id="minutes">00</span> <span id="nokta"> : </span>
+    <span id="seconds">00</span> <span id="nokta"> : </span>
+    <span id="milliseconds">000</span>
+  </div>
+  <div class="buttons">
+  <button id="startStop">Başlat</button>
+  <button id="reset">Sıfırla</button>
+    </div>
+</div>
+<script>
+    let hours = 0;
+    let minutes = 0;
+    let seconds = 0;
+    let milliseconds = 0;
+    let interval;
+    let isRunning = false;
+    
+    function startStop() {
+      if (isRunning) {
+        clearInterval(interval);
+        document.getElementById('startStop').innerText = 'Başlat';
+      } else {
+        interval = setInterval(updateTime, 10);
+        document.getElementById('startStop').innerText = 'Durdur';
+      }
+      isRunning = !isRunning;
+    }
+    
+    function updateTime() {
+      milliseconds += 10;
+      if (milliseconds == 1000) {
+        milliseconds = 0;
+        seconds++;
+      }
+      if (seconds == 60) {
+        seconds = 0;
+        minutes++;
+      }
+      if (minutes == 60) {
+        minutes = 0;
+        hours++;
+      }
+      document.getElementById('hours').innerText = pad(hours);
+      document.getElementById('minutes').innerText = pad(minutes);
+      document.getElementById('seconds').innerText = pad(seconds);
+      document.getElementById('milliseconds').innerText = pad(milliseconds);
+    }
+    
+    function reset() {
+      clearInterval(interval);
+      hours = minutes = seconds = milliseconds = 0;
+      document.getElementById('hours').innerText = '00';
+      document.getElementById('minutes').innerText = '00';
+      document.getElementById('seconds').innerText = '00';
+      document.getElementById('milliseconds').innerText = '000';
+      document.getElementById('startStop').innerText = 'Başlat';
+      isRunning = false;
+    }
+    
+    function pad(value) {
+      return value < 10 ? '0' + value : value;
+    }
+    
+    document.getElementById('startStop').addEventListener('click', startStop);
+    document.getElementById('reset').addEventListener('click', reset);
+    
+</script>
+</body>
+</html>
